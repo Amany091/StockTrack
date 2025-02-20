@@ -1,10 +1,10 @@
 "use client"
 import { createContext, useContext, useState } from "react";
-import { Products } from "../interfaces/products";
+import { Products } from "@/src/types/product";
 
 export const ProductsContext = createContext({} as { products: Products[], setProducts: React.Dispatch<React.SetStateAction<Products[]>> })
 
-export function ProductsProvider({ children}:{children: React.ReactNode}) {
+export function ProductsProvider({ children }: { children: React.ReactNode }) {
     const [products, setProducts] = useState<Products[]>([])
     return (
         <ProductsContext.Provider value={{ products, setProducts }}>
@@ -13,9 +13,9 @@ export function ProductsProvider({ children}:{children: React.ReactNode}) {
     )
 }
 
-export function useProductsContext() { 
+export function useProductsContext() {
     const context = useContext(ProductsContext)
-    if (!context) { 
+    if (!context) {
         throw new Error('useProductsContext must be used within a ProductsProvider')
     }
     return context

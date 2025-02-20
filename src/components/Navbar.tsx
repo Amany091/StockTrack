@@ -1,22 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 
-const Navbar = () => {
-    const [token, setToken] = useState("")
+const Navbar = ({ token }: { token: string | undefined }) => {
     const router = useRouter()
     const pathname = usePathname()
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            const res = await fetch("/api/cookie", { credentials: "include", cache: "force-cache" });
-            const { token } = await res.json()
-            setToken(token?.split(" ")[1])
-        }
-        fetchToken()
-    }, [])
 
     async function logout() {
         try {
@@ -26,13 +16,12 @@ const Navbar = () => {
             })
             const data = await response.json()
             if (data.success) {
-                setToken("")
                 router.push("/auth/login")
             };
-            
+
             return data
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            return new Error(error)
         }
     }
 

@@ -1,9 +1,9 @@
 "use client"
 import React, { useContext, useEffect, useState } from 'react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { getProducts } from '../utils/fetchWrapper';
+import { getProducts } from '../../utils/fetchWrapper';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { ProductsContext } from '../context/productsContext';
+import { ProductsContext } from '../../context/productsContext';
 
 const FilterProducts = (props: {
     searchParams?: Promise<{
@@ -20,7 +20,7 @@ const FilterProducts = (props: {
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const { replace } = useRouter()
-    const {setProducts} = useContext(ProductsContext)
+    const { setProducts } = useContext(ProductsContext)
 
 
     useEffect(() => {
@@ -32,8 +32,8 @@ const FilterProducts = (props: {
                 setMinPrice(minPrice || "0")
                 setMaxPrice(maxPrice || "3000")
             }
-           const { data } = await getProducts({ page, minPrice, maxPrice })
-           setProducts(data)
+            const { data } = await getProducts({ page, minPrice, maxPrice })
+            setProducts(data)
         }
         getQueries().catch(error => console.log(error))
     }, [])
@@ -42,23 +42,23 @@ const FilterProducts = (props: {
         e.preventDefault()
 
         const params = new URLSearchParams(searchParams)
-        if (page) params.set('page', page.toString() )
-        if (minPrice) params.set('min-price', minPrice.toString() )
-        if (maxPrice) params.set('max-price', maxPrice.toString() )
+        if (page) params.set('page', page.toString())
+        if (minPrice) params.set('min-price', minPrice.toString())
+        if (maxPrice) params.set('max-price', maxPrice.toString())
         replace(`${pathname}?${params.toString()}`);
 
         const { data } = await getProducts({ page, minPrice, maxPrice })
         setProducts(data)
-        
+
     }
 
     return (
         <div >
             <span className='flex gap-3 items-center cursor-pointer' onClick={() => setShow(!show)}>
                 <h5>Filter by price</h5>
-                <MdOutlineKeyboardArrowDown  />
+                <MdOutlineKeyboardArrowDown />
             </span>
-            <form className={`transition-all duration-300 ease-in-out overflow-hidden flex gap-3 items-center ${show ? "max-h-16 opacity-100": "max-h-0 opacity-0"} `}>
+            <form className={`transition-all duration-300 ease-in-out overflow-hidden flex gap-3 items-center ${show ? "max-h-16 opacity-100" : "max-h-0 opacity-0"} `}>
                 <div id="minPrice">
                     <label className='text-sm' htmlFor="min-price">Form</label>
                     <input
