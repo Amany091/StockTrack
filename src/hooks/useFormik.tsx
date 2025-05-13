@@ -1,7 +1,8 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
+import FileInput from "../components/fields/FileInput";
+import TextInput from "../components/fields/TextInput";
 
 export type FormField = {
     isLabel: boolean;
@@ -9,6 +10,8 @@ export type FormField = {
     placeholder: string;
     type: string;
     classname?: string;
+    initialImageURL?: string;
+    inputType?: string;
 }
 export type UseFormikProps<T> = {
     initalValues: T;
@@ -16,6 +19,27 @@ export type UseFormikProps<T> = {
     formCalssName?: string;
     validationSchema: Yup.ObjectSchema<any>;
     fields: FormField[];
+}
+
+const renderField = (field: FormField) => {
+    switch (field.type) {
+        case "file": return (
+            <FileInput
+                name={field.name}
+                initalImageURL={field.initialImageURL}
+            />
+        )
+            break;
+        case "input": return (
+            <TextInput
+                className={field?.classname}
+                name={field.name}
+                placeholder={field.placeholder}
+                inputType={field.inputType}
+            />
+        );
+            break;
+    };
 }
 
 
@@ -26,37 +50,18 @@ export const UseFormFormik = <T extends object>({
     validationSchema,
     fields
 }: UseFormikProps<T>) => {
-    const [isHide, setIsHide] = useState(false)
     return (
         <Formik
             initialValues={initalValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
         >
-            {({ isSubmitting, handleChange }) => (
+            {({ isSubmitting }) => (
                 <Form className="flex flex-col gap-4" >
                     {fields.map((field) => (
                         <div className="text-black flex flex-col gap-1" key={field.name} >
                             {field.isLabel && <label htmlFor={field.name} > {field.name} </label>}
-                            <div className="relative">
-                                <Field
-                                    type={field.type === "password" ? (isHide ? "text" : "password") : field.type}
-                                    name={field.name}
-                                    placeholder={field.placeholder || field.name}
-                                    className={field.classname || "w-full rounded-lg p-3 focus:outline-cyan-600"}
-                                    onChange={handleChange}
-                                />
-                                {field.type === "password" ? (isHide ?
-                                    <FaEyeSlash className="text-gray-500 cursor-pointer absolute top-4 right-5" onClick={() => setIsHide(!isHide)} />
-                                    :
-                                    <FaEye className="text-gray-500 cursor-pointer absolute top-4 right-5" onClick={() => setIsHide(!isHide)} />
-                                ) : ""}
-                            </div>
-                            <ErrorMessage
-                                name={field.name}
-                                component="div"
-                                className="text-red-500 text-xs"
-                            />
+                            {renderField(field)}
                         </div>
                     ))}
                     <button

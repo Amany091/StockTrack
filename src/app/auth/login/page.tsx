@@ -1,6 +1,6 @@
 import React from 'react'
 import { Roboto } from 'next/font/google'
-import LoginForm from '@/src/components/auth/LoginForm'
+import LoginForm from '@/src/components/auth/loginForm/LoginForm'
 
 export const metadata = {
   title: 'Login Page',

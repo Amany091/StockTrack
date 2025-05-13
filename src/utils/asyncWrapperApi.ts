@@ -39,6 +39,7 @@ async function fetchApi<T>({ baseUrl, endPoint, method = "GET", body, searchPara
         if (!response.ok) {
             toast.error(data?.errors?.[0].msg || data?.message)
         }
+        console.log(response);
         return data
     } catch (error) {
         toast.error("Something went wrong. Please try again!");

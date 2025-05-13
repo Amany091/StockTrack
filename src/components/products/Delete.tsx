@@ -17,8 +17,10 @@ const DeleteProduct = ({ product }: { product: Products }) => {
     }
 
     return (
-        <button onClick={() => handleDelete(product)} className='text-red-500' >
-            <FaTrash />
+        <button
+            onClick={() => handleDelete(product)}
+            className='text-red-500 absolute top-1 end-1' >
+            <FaTrash size={15} />
         </button>
     );
 }

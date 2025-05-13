@@ -5,5 +5,5 @@ export type Products = {
     quantity: number,
     description: string,
     priceAfterDiscount?: number,
-    imgCover?: string
+    imgCover: string;
 }

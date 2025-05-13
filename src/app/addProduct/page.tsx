@@ -1,6 +1,6 @@
 
 import React from 'react'
-import AddProductForm from '@/src/components/products/AddProductForm'
+import AddProductForm from '@/src/components/products/addProductForm/AddProductForm'
 import { cookies } from 'next/headers'
 
 const Page = async () => {

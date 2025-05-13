@@ -1,6 +1,6 @@
 import React from 'react'
 import { Roboto } from 'next/font/google'
-import SignupForm from '@/src/components/auth/SignupForm'
+import SignupForm from '@/src/components/auth/signupForm/SignupForm'
 
 const roboto = Roboto({
   subsets: ['latin'],

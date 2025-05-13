@@ -3,36 +3,14 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import fetchApi from '@/src/utils/asyncWrapperApi'
-import * as Yup from 'yup'
 import { UseFormFormik } from '@/src/hooks/useFormik'
 import { LoginFields, User } from '@/src/types/login'
 import Link from 'next/link'
+import { loginFields, loginInitialValues, loginValidationSchema } from './loginFormHelper'
 
 type Api = {
     data: User
 }
-
-const fields = [
-    {
-        name: "email",
-        isLabel: true,
-        type: "email",
-        placeholder: "Email",
-    },
-    {
-        name: "password",
-        isLabel: true,
-        type: "password",
-        placeholder: "type your password"
-    }
-]
-
-const initalValues = { email: "", password: "" }
-
-const validationSchema = Yup.object({
-    email: Yup.string().required("email is required"),
-    password: Yup.string().required("password is required")
-});
 
 const LoginForm = () => {
     const router = useRouter()
@@ -48,7 +26,7 @@ const LoginForm = () => {
             })
             if (data) {
                 toast.success("Login Successfully")
-                router.push("/")
+                return router.push("/")
             }
         } catch (error) {
             return error
@@ -58,9 +36,9 @@ const LoginForm = () => {
     return (
         <div>
             <UseFormFormik
-                fields={fields}
-                initalValues={initalValues}
-                validationSchema={validationSchema}
+                fields={loginFields}
+                initalValues={loginInitialValues}
+                validationSchema={loginValidationSchema}
                 onSubmit={accLogin}
             />
             <Link href={"/auth/signup"} className='text-xs block mx-auto text-center'>

@@ -53,12 +53,12 @@ const FilterProducts = (props: {
     }
 
     return (
-        <div >
+        <div className='w-fit' >
             <span className='flex gap-3 items-center cursor-pointer' onClick={() => setShow(!show)}>
                 <h5>Filter by price</h5>
                 <MdOutlineKeyboardArrowDown />
             </span>
-            <form className={`transition-all duration-300 ease-in-out overflow-hidden flex gap-3 items-center ${show ? "max-h-16 opacity-100" : "max-h-0 opacity-0"} `}>
+            <form className={`transition-all duration-300 ease-in-out overflow-hidden flex gap-3 items-center flex-col md:flex-row ${show ? "max-h-16 opacity-100" : "max-h-0 opacity-0"} `}>
                 <div id="minPrice">
                     <label className='text-sm' htmlFor="min-price">Form</label>
                     <input
